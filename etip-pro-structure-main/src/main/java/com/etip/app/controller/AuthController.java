@@ -32,9 +32,6 @@ public class AuthController {
 	@Autowired
 	private RoleRepository roleRepository;
 	
-	@Autowired
-	private UserRepository userRepository;
-	
 	
 	@PostMapping(value="/add_user")
 	public ResponseEntity<String> addUser(HttpServletRequest request,@RequestBody @Valid SignupRequest signupRequest) {
@@ -50,14 +47,14 @@ public class AuthController {
 	
 	
 	@PostMapping(value="/signin")
-	public ResponseEntity<Object> login(HttpServletRequest request,@RequestBody @Valid LoginRequest loginRequest) {
+	public ResponseEntity<Object> login(HttpServletRequest request, @RequestBody @Valid LoginRequest loginRequest) {
 		
 		String ipAddress = request.getHeader("X-FORWARDED-FOR");  
 		if (ipAddress == null) {  
 		    ipAddress = request.getRemoteAddr();  
 		}
 		
-		return authService.login(loginRequest);
+		return authService.login(loginRequest,ipAddress);
 	}
 	
 	

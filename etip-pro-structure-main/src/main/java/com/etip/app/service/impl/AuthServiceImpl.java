@@ -6,7 +6,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import com.etip.app.model.request.SignupRequest;
 import com.etip.app.repository.RoleRepository;
 import com.etip.app.repository.UserRepository;
 import com.etip.app.security.jwt.JwtUtils;
+import com.etip.app.security.services.UserDetailsImpl;
 import com.etip.app.security.services.UserDetailsServiceImpl;
 import com.etip.app.serivice.AuthService;
 
@@ -73,7 +76,11 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
-	public ResponseEntity<Object> login(LoginRequest loginRequest) {
+	public ResponseEntity<Object> login(LoginRequest loginRequest, String ipAddress) {
+		Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+		SecurityContextHolder.getContext().setAuthentication(authenticate);
+		UserDetailsImpl userDetails= (UserDetailsImpl) authenticate.getPrincipal();
+		String token = jwtUtils.generateJwtToken(authenticate);
 		
 		return null;
 	}

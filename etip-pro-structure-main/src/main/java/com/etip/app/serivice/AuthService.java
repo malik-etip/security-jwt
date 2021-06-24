@@ -11,5 +11,5 @@ public interface AuthService {
 
 	public ResponseEntity<String> addUser(SignupRequest signupRequest);
 	
-	public ResponseEntity<Object> login(LoginRequest loginRequest);
+	public ResponseEntity<Object> login(LoginRequest loginRequest, String ipAddress);
 }
