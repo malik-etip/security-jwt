@@ -2,6 +2,7 @@ package com.etip.app.entity;
 
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.etip.app.model.ERole;
@@ -9,6 +10,7 @@ import com.etip.app.model.ERole;
 @Document(collection = "roles")
 public class Role {
 	@NotBlank
+	@Id
     private String roleId;
     @NotBlank
     private ERole roleName;
