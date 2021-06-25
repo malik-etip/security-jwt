@@ -56,7 +56,7 @@ public class UserDetailsImpl implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return null;
+		return authorities;
 	}
 
 	public String getId() {
@@ -69,43 +69,36 @@ public class UserDetailsImpl implements UserDetails {
 	
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
+		return password;
 	}
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
+		return username;
 	}
 	
 	public String getIpAddress() {
 		return ipAddress;
 	}
-	
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -115,8 +108,16 @@ public class UserDetailsImpl implements UserDetails {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		UserDetailsImpl user = (UserDetailsImpl) o;
-		return Objects.equals(id, user.id);
+		System.out.println("UserDeatils service equals called : "+user);
+		
+		System.out.println("check equality:: "+Objects.equals(id, user.id) +  Objects.equals(ipAddress, user.getIpAddress()));
+		return Objects.equals(id, user.id) && Objects.equals(ipAddress, user.getIpAddress());
 	}
-	
+
+	@Override
+	public String toString() {
+		return "UserDetailsImpl [id=" + id + ", username=" + username + ", email=" + email + ", ipAddress=" + ipAddress
+				+ ", password=" + password + ", authorities=" + authorities + "]";
+	}
 
 }

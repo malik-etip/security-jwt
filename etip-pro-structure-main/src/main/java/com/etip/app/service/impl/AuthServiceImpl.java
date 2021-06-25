@@ -16,11 +16,11 @@ import com.etip.app.entity.Role;
 import com.etip.app.entity.User;
 import com.etip.app.model.request.LoginRequest;
 import com.etip.app.model.request.SignupRequest;
+import com.etip.app.model.response.LoginResponse;
 import com.etip.app.repository.RoleRepository;
 import com.etip.app.repository.UserRepository;
 import com.etip.app.security.jwt.JwtUtils;
 import com.etip.app.security.services.UserDetailsImpl;
-import com.etip.app.security.services.UserDetailsServiceImpl;
 import com.etip.app.serivice.AuthService;
 
 @Service
@@ -31,9 +31,6 @@ public class AuthServiceImpl implements AuthService {
 	
 	@Autowired
 	private JwtUtils jwtUtils;
-	
-	@Autowired
-	private UserDetailsServiceImpl userDetailsServiceImpl;
 
 	@Autowired
 	private PasswordEncoder encoder;
@@ -81,8 +78,7 @@ public class AuthServiceImpl implements AuthService {
 		SecurityContextHolder.getContext().setAuthentication(authenticate);
 		UserDetailsImpl userDetails= (UserDetailsImpl) authenticate.getPrincipal();
 		String token = jwtUtils.generateJwtToken(authenticate);
-		
-		return null;
+		return ResponseEntity.ok(new LoginResponse(userDetails.getEmail(),userDetails.getUsername(),token));
 	}
 
 }
